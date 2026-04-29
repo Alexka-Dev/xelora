@@ -1,7 +1,8 @@
 pragma solidity 0.4.23;
 
 import "../zeppelin/contracts/ownership/CanReclaimToken.sol";
-import "../zeppelin/contracts/ownership/Claimable.sol";
+import "./Multiownable.sol"; // We've imported the new modular pattern
+/*import "../zeppelin/contracts/ownership/Claimable.sol";
 
 
 /**
@@ -12,13 +13,12 @@ import "../zeppelin/contracts/ownership/Claimable.sol";
  * this contract
  */
 contract Recoverable is CanReclaimToken, Claimable {
-  using SafeERC20 for ERC20Basic;
+    using SafeERC20 for ERC20Basic;
 
-  /**
-   * @dev Transfer all ether held by the contract to the contract owner.
-   */
-  function reclaimEther() external onlyOwner {
-    owner.transfer(address(this).balance);
-  }
-
+    /**
+     * @dev Transfer all ether held by the contract to the contract owner.
+     */
+    function reclaimEther() external onlyMultiowner {
+        owner.transfer(address(this).balance);
+    }
 }
